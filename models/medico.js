@@ -1,7 +1,6 @@
 'use strict'
 
 const mongoose = require('mongoose'); //mongoose mediador entre la base de datos y nuestro backend
-
 const medicoSchema = new mongoose.Schema({ 
 	matricula:Number,
 	apynombre:String,
@@ -11,8 +10,7 @@ const medicoSchema = new mongoose.Schema({
  	cantpacs:Number,
 
 });
-
-
 const Medico = mongoose.model('Medico', medicoSchema);
+module.exports = Medico;
 
-module.exports = Medico; 
+
