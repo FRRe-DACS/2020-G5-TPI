@@ -52,5 +52,11 @@ app.post('/api/historiacli/create', historiacliControl.create);
 app.put('/api/historiacli/update/:id',historiacliControl.update);
 app.delete('/api/historiacli/delete/:id', historiacliControl.delete);
 
+// Controllers de test
+const personalAdmControl = require('./controllers/personalAdm');
 
+// Routes
+app.post('/api/personalAdm/create', personalAdmControl.create);
+app.put('/api/personalAdm/update/:id',personalAdmControl.update);
+app.delete('/api/personalAdm/delete/:id', personalAdmControl.delete);
 
