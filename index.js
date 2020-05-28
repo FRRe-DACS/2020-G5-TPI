@@ -6,31 +6,45 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = process.env.PORT || 8080
 
-//Middleware
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-//Database
+app.get('/api/product',(req,res)=> {
+ res.send(200, {products:[]})
+
+})
+
+
 require('./connection'); // importa el archivo de conexión
+const Medico = require('./models/medico'); // importa el esquema
+/*const medico = new Medico({ apynombre: 'eldevsin.site',
+							matricula:2765 }); // crea la entidad*/
 
-// Controllers
-const hospitalControl = require('./controllers/hospital');
-const historiacliControl = require('./controllers/historiaclinica');
+app.post('/api/medico/',(req,res)=> {
+  //acceder al cuerpo de la peticion gracias a midleware de body parser puedo parsear y tratarlo como objeto json
+   console.log('POST /api/medico ')
+   console.log(req.body) //mostrar el cuerpo de la peticion
 
-// Routes
-app.post('/api/hospital/create', hospitalControl.create);
-app.put('/api/hospital/update/:id', hospitalControl.update);
-//app.get('/api/user/retrieve', hospitalControl.retrieve);
-app.delete('/api/hospital/delete/:id', hospitalControl.delete);
+   let medico = new Medico()
+    medico.matricula = req.body.matricula
+    medico.apynombre = req.body.apynombre
+    medico.especialidad = req.body.especialidad
+    medico.experiencia = req.body.experiencia
+    medico.telefono = req.body.telefono
+    medico.cantpacs = req.body.cantpacs
+    medico.save((err,medicoStored) => {
+    	if (err) res.status(500).send ({message:'Error al salvar la base de datos:${err}'})
+
+    		res.status(200).send({medico: medicoStored})
+    		
+   })
+ })
 
 
-app.post('/api/historiacli/create', historiacliControl.create);
-app.put('/api/historiacli/update/:id', historiacliControl.update);
-//app.get('/api/user/retrieve', historiacliControl.retrieve);
-app.delete('/api/historiacli/delete/:id', historiacliControl.delete);
+
+//medico.save(); // guarda en bd
 
 
-// Start server
 app.listen(port,() => {
 	console.log(`Proyecto de centro hospitalario en http://localhost:${port}`)
 })
