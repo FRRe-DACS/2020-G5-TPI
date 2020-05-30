@@ -1,16 +1,59 @@
-'use strict'
 
-const mongoose = require('mongoose'); //mongoose mediador entre la base de datos y nuestro backend
-const medicoSchema = new mongoose.Schema({ 
-	matricula:Number,
-	apynombre:String,
- 	especialidad:String,
- 	experiencia:String,
- 	telefono:Number,
- 	cantpacs:Number,
-
+// Cargamos el módulo de mongoose
+const mongoose = require('mongoose');
+// Cargamos el módulo de bcrypt
+const bcrypt = require('bcrypt');
+// Definimos el factor de costo, el cual controla cuánto tiempo se necesita para calcular un solo hash de BCrypt. Cuanto mayor sea el factor de costo, más rondas de hash se realizan. Cuanto más tiempo sea necesario, más difícil será romper el hash con fuerza bruta.
+const saltRounds = 10;
+//Definimos los esquemas
+const Schema = mongoose.Schema;
+// Creamos el objeto del esquema con sus correspondientes campos
+const MedicoSchema = new Schema({
+	matricula: {
+		type: Number,
+		trim: true,
+		required: true,
+	},
+	apynombre: {
+		type: String,
+		trim: true,
+		required: true
+	},
+	password: {
+		type: String,
+		trim: true,
+		required: true
+	},
+	especialidad: {
+		type: String,
+		trim: true,
+		required: false
+	},
+	experiencia: {
+		type: Number,
+		trim: true,
+		required: true
+	},
+	telefono: {
+		type: Number,
+		trim: true,
+		required: true
+	},
+	cantpac: {
+		type: Number,
+		trim: true,
+		required: true
+	},
+	email: {
+		type: String,
+		trim: true,
+		required: true
+	}
 });
-const Medico = mongoose.model('Medico', medicoSchema);
-module.exports = Medico;
-
-
+// Antes de almacenar la contraseña en la base de datos la encriptamos con Bcrypt, esto es posible gracias al middleware de mongoose
+MedicoSchema.pre('save', function(next){
+	this.password = bcrypt.hashSync(this.password, saltRounds);
+	next();
+});
+// Exportamos el modelo para usarlo en otros ficheros
+module.exports = mongoose.model('Medico', MedicoSchema);

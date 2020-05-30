@@ -20,13 +20,26 @@ app.listen(port,() => {
 
 
 
+const logger = require('morgan');
+
+
 // Controllers de medico
 const medicoControl = require('./controllers/medico');
 
 // Routes
 app.post('/api/medico/create', medicoControl.create);
+app.put('/api/medico/update/:Id', medicoControl.updateById);
+app.get('/api/medico', medicoControl.getAll);
+app.get('/api/medico/:Id', medicoControl.getById);
+app.post('/api/medico/autenticar', medicoControl.authenticate );
+
+
+
+
+
+/*
 app.put('/api/medico/update/:id', medicoControl.update);
-app.delete('/api/medico/delete/:id', medicoControl.delete);
+app.delete('/api/medico/delete/:id', medicoControl.delete);*/
 
 // Controllers de test
 const testControl = require('./controllers/test');
@@ -52,7 +65,7 @@ app.post('/api/historiacli/create', historiacliControl.create);
 app.put('/api/historiacli/update/:id',historiacliControl.update);
 app.delete('/api/historiacli/delete/:id', historiacliControl.delete);
 
-// Controllers de test
+// Controllers de personal adm
 const personalAdmControl = require('./controllers/personalAdm');
 
 // Routes
