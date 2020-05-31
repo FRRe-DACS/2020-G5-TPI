@@ -4,7 +4,7 @@ module.exports = {
     create: (req, res) => {
         let historiacli = new modeloHistoriacli({
 
-            nrohistoriacli: req.body.nrohistoriacli ,
+
             Habitofisiologico : req.body.Habitofisiologico ,
             Habitotoxico: req.body.Habitotoxico,
             Enfermedadesprevia: req.body.Enfermedadesprevia ,
@@ -22,7 +22,10 @@ module.exports = {
             });
     },
 
-    update: (req, res) => {
+
+
+
+    updateById: (req, res) => {
         // Recogemos un parámetro por la url
         var historiacliId = req.params.id;
 
@@ -46,7 +49,7 @@ module.exports = {
         });
     },
 
-    delete: (req, res) => {
+    deleteById: (req, res) => {
         var historiacliId = req.params.id;
 
         // Buscamos por ID, eliminamos el objeto y devolvemos el objeto borrado en un JSON
@@ -64,5 +67,42 @@ module.exports = {
             }
 
         });
-    }
+    },
+
+
+    getById: function (req, res, next) {
+        console.log(req.body);
+        modeloHistoriacli.findById(req.params.Id, function (err, result) {
+            if (err) {
+                next(err);
+            } else {
+                res.json({status: "success", message: "Historia clinica encontrada", data: {historiaclinica:result}});
+            }
+        });
+    },
+
+    //Metodo para retornar todos los test registrados en la base de datos
+    getAll: function (req, res, next) {
+        let historiacliList= [];
+        modeloHistoriacli.find({}, function (err,hist) {
+            if (err) {
+                next(err);
+            } else {
+                for (let his of hist) {
+                   historiacliList.push({id: his._id,
+                        Habitofisiologico : his.Habitofisiologico ,
+                        Habitotoxico: his.Habitotoxico,
+                        Enfermedadesprevia: his.Enfermedadesprevia ,
+                        Fechaultimoasiento: his.Fechaultimoasiento ,
+                        Datosfisico: his.Datosfisico ,
+
+                    });
+                }
+                res.json({status: "success", message: "Lista de historias clinicas !!!", data: {tests: historiacliList}});
+
+            }
+        });
+    },
+
+
 }

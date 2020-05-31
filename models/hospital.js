@@ -1,14 +1,41 @@
 'use strict'
-
-const mongoose = require('mongoose'); //mongoose mediador entre la base de datos y nuestro backend
-
-const hospitalSchema = new mongoose.Schema({
-    nombre:String,
-    localidad:String,
-    direccion:String,
-    telefono:Number,
-    ApyNomDirector:String,
-    capMaxPaciente:Number,
+// Cargamos el módulo de mongoose
+const mongoose = require('mongoose');
+// Cargamos el módulo de bcrypt
+//Definimos los esquemas
+const Schema = mongoose.Schema;
+// Creamos el objeto del esquema con sus correspondientes campos
+const hospitalSchema = new Schema({
+    nombre: {
+        type: String,
+        trim: true,
+        required: true,
+    },
+    localidad: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    direccion: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    telefono: {
+        type: Number,
+        trim: true,
+        required: false
+    },
+    ApyNomDirector: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    capMaxPaciente: {
+        type: Number,
+        trim: true,
+        required: true
+    }
 
 });
 

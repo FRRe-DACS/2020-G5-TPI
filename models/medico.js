@@ -30,9 +30,9 @@ const MedicoSchema = new Schema({
 		required: false
 	},
 	experiencia: {
-		type: Number,
+		type: String,
 		trim: true,
-		required: true
+		required: false
 	},
 	telefono: {
 		type: Number,
