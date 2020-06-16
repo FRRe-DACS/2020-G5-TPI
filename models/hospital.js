@@ -35,7 +35,10 @@ const hospitalSchema = new Schema({
         type: Number,
         trim: true,
         required: true
-    }
+    },
+    medicos:[{ type: Schema.Types.ObjectId,
+        ref: 'Medico'
+    }]
 
 });
 

@@ -1,4 +1,5 @@
 const hospitalModel = require('../models/hospital');
+// const medicoModel = require('../models/medico');
 
 // Codificamos las operaciones que se podran realizar con relacion a los usuarios
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
                 telefono: req.body.telefono,
                 ApyNomDirector: req.body.ApyNomDirector,
                 capMaxPaciente: req.body.capMaxPaciente
+
 
             },
             function (err, result) {
@@ -45,7 +47,8 @@ module.exports = {
                         direccion: hosp.direccion,
                         telefono: hosp.telefono,
                         ApyNomDirector: hosp.ApyNomDirector,
-                        capMaxPaciente: hosp.capMaxPaciente
+                        capMaxPaciente: hosp.capMaxPaciente,
+                        medicos: hosp.medicos
                     });
                 }
                 res.json({status: "success", message: "Hospital list found!!!", data: {hospital: hospitalList}});

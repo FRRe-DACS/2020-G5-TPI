@@ -2,9 +2,11 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 
 const app = express()
 const port = process.env.PORT || 8080
+
 
 // Middleware
 app.use(bodyParser.urlencoded({extended: false}))
@@ -13,6 +15,8 @@ app.use(bodyParser.json())
 
 //Database
 require('./connection'); // importa el archivo de conexión
+
+
 
 //Start server
 app.listen(port,() => {
@@ -27,12 +31,19 @@ app.listen(port,() => {
 const medicoControl = require('./controllers/medico');
 
 // Routes
-app.post('/api/medico/create', medicoControl.create);
+app.post('/api/medico/create/', medicoControl.create);
+app.post('/api/medico/autenticar/', medicoControl.authenticate );
+
+app.post('/api/medico/create/:_id', medicoControl.asigHospital);
+
+
 app.put('/api/medico/update/:Id', medicoControl.updateById);
 app.get('/api/medico', medicoControl.getAll);
+
 app.get('/api/medico/:Id', medicoControl.getById);
-//app.post('/api/medico/autenticar', medicoControl.authenticate );
+
 app.delete('/api/medico/delete/:Id', medicoControl.deleteById );
+
 
 
 
