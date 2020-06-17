@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 const personalAdmSchema = new Schema({
     apynombre: {
         type: String,
-        trim: true,
+        unique: true,
         required: true,
     },
     telefono: {
@@ -22,7 +22,6 @@ const personalAdmSchema = new Schema({
     },
     password: {
         type: String,
-        trim: true,
         required: true
     },
     email:{
@@ -41,10 +40,32 @@ const personalAdmSchema = new Schema({
         required: false
     }
 });
-// Antes de almacenar la contraseña en la base de datos la encriptamos con Bcrypt, esto es posible gracias al middleware de mongoose
 personalAdmSchema.pre('save', function(next){
-    this.password = bcrypt.hashSync(this.password, saltRounds);
-    next();
+    if (this.isNew || this.isModified('password')){
+
+        const document = this;
+        bcrypt.hash(document.password, saltRounds, (err, hashedPassword) => {
+            if(err){
+                next(err);
+            }else{
+                document.password = hashedPassword;
+                next();
+            }
+
+        });
+
+    }else {
+        next();
+    }
 });
+personalAdmSchema.methods.isCorrectPassword =function(password, callback){
+    bcrypt.compare(password, this.password, function(err, same){
+        if(err){
+            callback(err);
+        }else {
+            callback(err,same);
+        }
+    });
+}
 // Exportamos el modelo para usarlo en otros ficheros
 module.exports = mongoose.model('PersonalAdm', personalAdmSchema);

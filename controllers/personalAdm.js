@@ -26,29 +26,27 @@ module.exports = {
 
             });
     },
-    /*
-        authenticate: function (req, res, next) {
-            personalAdmModel.findOne({email: req.body.email}, function (err, medicoInfo) {
-                if (err) {
-                    next(err);
-                } else {
-                    if (bcrypt.compareSync(req.body.password, medicoInfo.password)) {
-                        const token = jwt.sign({id: medicoInfo._id}, req.app.get('secretKey'), {expiresIn: '1h'});
-                        res.json({
-                            status: "Ok",
-                            message: "El Medico ha sido autenticado!!!",
-                            data: {medico: userInfo, token: token}
-                        });
-                    } else {
-                        res.json({status: "error", message: "Invalid email/password!!", data: null});
+    authenticate: function (req, res ) {
+        const {apynombre, password} = req.body;
+        personalAdmModel.findOne({apynombre}, (err, personalAdm) => {
+            if(err){
+                res.status(500).send('ERROR AL AUTENTICAR PERSONAL ADMINISTRATIVO');
+            } else if (!personalAdm) {
+                res.status(500).send('EL PERSONAL ADMINISTRATIVO NO EXISTE');
+            }else {
+                personalAdm.isCorrectPassword(password, (err,result)=>{
+                    if(err){
+                        res.status(500).send('ERROR AL AUTENTICAR');
+                    } else if (result) {
+                        res.status(200).send('PERSONAL ADMINISTRATIVO AUTENTICADO CORRECTAMENTE');
+                    }else {
+                        res.status(500).send('PERSONAL ADMINISTRATIVO Y/O CONTRASENA INCORRECTA');
                     }
-                }
-            });
-        },
 
-     */
-
-
+                });
+            }
+        });
+    },
     getById: function (req, res, next) {
         console.log(req.body);
         personalAdmModel.findById(req.params.Id, function (err, result) {

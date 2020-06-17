@@ -89,6 +89,7 @@ const personalAdmControl = require('./controllers/personalAdm');
 
 // Routes
 app.post('/api/personalAdm/create', personalAdmControl.create);
+app.post('/api/personalAdm/autenticar/', personalAdmControl.authenticate );
 app.put('/api/personalAdm/update/:Id',personalAdmControl.updateById);
 app.delete('/api/personalAdm/delete/:Id', personalAdmControl.deleteById);
 app.get('/api/personalAdm',personalAdmControl.getAll);
