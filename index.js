@@ -4,6 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 
+
 const app = express()
 const port = process.env.PORT || 8080
 
@@ -64,7 +65,7 @@ app.get('/api/test/:Id', testControl.getById);
 app.get('/api/test', testControl.getAll);
 
 
-// Controllers de test
+// Controllers de hospital
 const hospitalControl = require('./controllers/hospital');
 
 // Routes
@@ -95,3 +96,11 @@ app.delete('/api/personalAdm/delete/:Id', personalAdmControl.deleteById);
 app.get('/api/personalAdm',personalAdmControl.getAll);
 app.get('/api/personalAdm/:Id',personalAdmControl.getById);
 
+// Controllers de recurso
+const recursoControl = require('./controllers/recurso');
+
+// Routes
+app.post('/api/recurso/create', recursoControl.create);
+app.put('/api/recurso/update/:id', recursoControl.updateById);
+app.get('/api/recurso/:Id', recursoControl.getById);
+app.get('/api/recurso', recursoControl.getAll);
