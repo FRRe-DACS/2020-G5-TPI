@@ -4,33 +4,25 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 
 const testSchema = new mongoose.Schema({
-    Fech_1eros_sintoms:{
-        type: Date,
-        trim: true,
-        required: true,
-
-    },
-    Fech_consult: {
-        type: Date,
-        trim: true,
-        required: true,
-    } ,
-    Sintomas: {
-        type: String,
-        trim: true,
-        required: true,
-    } ,
-    Tipodemuestra: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    Resultado: {
-        type: String,
-        trim: true,
-        required: true,
-    } ,
+    //datos personales
+    Apynombredeltesteado:{type:string},
+    Localidadorigen:{type:sring},
+    Localidadinternacion:{type:string},
+    Provincia:{type:string},
+    Direccion:{type:string},
+    //datos primeros sintomas
+    Fech_1eros_sintoms:{type: Date,required: true,},
+    Fech_consult: {type: Date,trim: true,required: true,} ,
+    Sintomas: {type: String,trim: true,required: true,  } ,
+    Enfermedadespreviascomorbilidades:{type:string},
+    //evaluaciondel medico
+    Tipodemuestra: { type: String,trim: true,required: true,},
+    Evolucion:{type:string},
     Riesgo: Boolean ,
+    Resultado: Boolean ,
+    Fechaalta:String,
+    Fechadedefuncion:String,
+    Datosdelaspersonasconlaqueestuvoencontacto:String,
 
 }) ;
 
