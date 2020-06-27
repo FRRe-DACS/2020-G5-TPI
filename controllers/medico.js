@@ -1,5 +1,7 @@
 // Cargamos el modelo recien creado
 const medicoModel = require('../models/medico');
+//cargamos el modelo de hospital para hacer la relacion 1 a n
+const hospitalModel = require('../models/hospital');
 // Cargamos el módulo de bcrypt
 //const bcrypt = require('bcrypt');
 // Cargamos el módulo de jsonwebtoken
@@ -27,25 +29,44 @@ module.exports = {
 
             });
     },
-    /*
-    authenticate: function (req, res, next) {
-        medicoModel.findOne({email: req.body.email}, function (err, medicoInfo) {
-            if (err) {
-                next(err);
-            } else {
-                if (bcrypt.compareSync(req.body.password, medicoInfo.password)) {
-                    const token = jwt.sign({id: medicoInfo._id}, req.app.get('secretKey'), {expiresIn: '1h'});
-                    res.json({
-                        status: "Ok",
-                        message: "El Medico ha sido autenticado!!!",
-                        data: {medico: userInfo, token: token}
-                    });
-                } else {
-                    res.json({status: "error", message: "Invalid email/password!!", data: null});
-                }
+    asigHospital: async function(req,res) {
+        // crear medico para el hospital
+        const medicoN = new medicoModel(req.body)
+        //buscar el hospital para asignar un medico
+        const hospital = await hospitalModel.findById(req.params)
+        //asignar el hospital como lugar de trabajo del medico
+        medicoN.hospitals =hospital
+        //guardamos el medico para hospital
+        await medicoN.save()
+        //asignar el medico dentro del array de medicos del hospital
+        hospital.medicos.push(medicoN)
+        //guardar el medico
+        await hospital.save();
+        //enviar al hospital el medico
+        res.send(medicoN)
+    },
+
+    authenticate: function (req, res ) {
+        const {apynombre, password} = req.body;
+        medicoModel.findOne({apynombre}, (err, medico) => {
+            if(err){
+                res.status(500).send('ERROR AL AUTENTICAR MEDICO');
+            } else if (!medico) {
+                res.status(500).send('EL MEDICO NO EXISTE');
+            }else {
+                medico.isCorrectPassword(password, (err,result)=>{
+                    if(err){
+                        res.status(500).send('ERROR AL AUTENTICAR');
+                    } else if (result) {
+                        res.status(200).send('MEDICO AUTENTICADO CORRECTAMENTE');
+                    }else {
+                        res.status(500).send('MEDICO Y/O CONTRASENA INCORRECTA');
+                    }
+
+                });
             }
-        });
-    },*/
+            });
+    },
     getById: function (req, res, next) {
         console.log(req.body);
         medicoModel.findById(req.params.Id, function (err, result) {

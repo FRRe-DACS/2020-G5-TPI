@@ -5,7 +5,10 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 const testSchema = new mongoose.Schema({
     Fech_1eros_sintoms:{
-        type: String,
+        type: Date,
+        trim: true,
+        required: true,
+
     },
     Fech_consult: {
         type: Date,

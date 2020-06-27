@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 // colocamos la url de conexión local y el nombre de la base de datos
-mongoose.connect('mongodb://localhost:27017/centrohospitalario', {
+mongoose.connect('mongodb+srv://santi:AkZutn2021@grupo5-mjth3.mongodb.net/centrohospitalario', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
