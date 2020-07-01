@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
     //State para iniciar sesion
     const [usuario, guardarUsuario] = useState({
-        email: '',
+        apynombre: '',
         password: ''
     });
 
     //extraer de usuario
-    const { email, password } = usuario;
+    const { apynombre, password } = usuario;
 
     const onChange = e => {
         guardarUsuario({
@@ -18,9 +19,12 @@ const Login = () => {
     }
 
     //cuando el usuario hace click en iniciar sesion
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
         //Validar que no haya campos vacios
+        await axios.post('https://grupo5-tpi-backend.herokuapp.com/medico/autenticar/',{
+            apynombre: this.state.apynombre,password:this.state.password
+        })
 
     }
 
@@ -31,14 +35,14 @@ const Login = () => {
 
                 <form onSubmit={onSubmit}>
                     <div className="campo-form">
-                        <label htmlFor="email">Nombre</label>
+                        <label htmlFor="apynombre">Nombre</label>
 
                         <input 
-                            type="email"
-                            id="email"
-                            name="email"
+                            type="text"
+                            id="apynombre"
+                            name="apynombre"
                             placeholder="Tu nombre"
-                            value={email}
+                            value={apynombre}
                             onChange={onChange}
                         />
                     </div>

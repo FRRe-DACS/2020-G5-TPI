@@ -1,0 +1,1 @@
+export const PACIENTE_ACTUAL = 'PACIENTE_ACTUAL';

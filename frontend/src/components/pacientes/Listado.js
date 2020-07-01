@@ -1,31 +1,33 @@
-import React, { Fragment } from 'react';
-import Paciente from './Paciente'
+import React, { Fragment, useContext } from 'react';
+import Datos from './InfoPersonal';
+import Historia from './HistoriaClinica';
+import pacienteContext from '../../context/pacientes/pacienteContext';
 
-const ListadoPacientes = () => {
+const DatosPaciente = () => {
+    const pacientesContext = useContext(pacienteContext);
 
-    const pacientes = [
-        {nombre: 'Zurlo Maximiliano', estado: true},
-        {nombre: 'alguien mas', estado: true},
-        {nombre: 'otro nombre', estado: false},
-        {nombre: 'este otro', estado: true},
-    ]
+    const { paciente } = pacientesContext;
+
+    if(!paciente) return <h2>Selecciona un paciente</h2>
+
+    const [pacienteActual] = paciente;
 
     return ( 
         <Fragment>
-            <h2>Pacientes</h2>
+            <h2>Paciente: {pacienteActual.nombre}</h2>
 
             <ul className="listado-tareas">
-                {pacientes.length === 0
-                    ? (<li className="tarea"><p>No hay pacientes</p></li>)
-                    : pacientes.map(paciente => (
-                        <Paciente
-                            paciente={paciente}
-                        />
-                    ))
-                }
+                <Datos/>
+                
+                <Historia/>
+
+                <button 
+                type="button"
+                className="btn btn-primario"
+                >Dar de alta</button>
             </ul>
         </Fragment>
      );
 }
 
-export default ListadoPacientes;
+export default DatosPaciente;

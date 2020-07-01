@@ -34,27 +34,16 @@ const medicoControl = require('./controllers/medico');
 // Routes
 app.use('/api/medico', require('./rutas/medico.js'));
 
+// app.use('/api/paciente', require('./rutas/paciente.js'));
 
 /*
 app.post('/api/medico/create/', medicoControl.create);
 app.post('/api/medico/autenticar/', medicoControl.authenticate );
-
 app.post('/api/medico/create/:_id', medicoControl.asigHospital);
-
-
 app.put('/api/medico/update/:Id', medicoControl.updateById);
 app.get('/api/medico', medicoControl.getAll);
-
 app.get('/api/medico/:Id', medicoControl.getById);
-
 app.delete('/api/medico/delete/:Id', medicoControl.deleteById );
-
-
-
-
-
-
-
 app.put('/api/medico/update/:id', medicoControl.update);
 app.delete('/api/medico/delete/:id', medicoControl.delete);
 */
