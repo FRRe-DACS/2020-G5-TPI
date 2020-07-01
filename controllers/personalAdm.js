@@ -26,6 +26,7 @@ module.exports = {
 
             });
     },
+<<<<<<< HEAD
     /*
         authenticate: function (req, res, next) {
             personalAdmModel.findOne({email: req.body.email}, function (err, medicoInfo) {
@@ -77,6 +78,57 @@ module.exports = {
                 }
                 res.json({status: "success", message: "Personal Administrativo list found!!!", data: {personalAdm: personalAdmList}});
 
+=======
+    authenticate: function (req, res ) {
+        const {apynombre, password} = req.body;
+        personalAdmModel.findOne({apynombre}, (err, personalAdm) => {
+            if(err){
+                res.status(500).send('ERROR AL AUTENTICAR PERSONAL ADMINISTRATIVO');
+            } else if (!personalAdm) {
+                res.status(500).send('EL PERSONAL ADMINISTRATIVO NO EXISTE');
+            }else {
+                personalAdm.isCorrectPassword(password, (err,result)=>{
+                    if(err){
+                        res.status(500).send('ERROR AL AUTENTICAR');
+                    } else if (result) {
+                        res.status(200).send('PERSONAL ADMINISTRATIVO AUTENTICADO CORRECTAMENTE');
+                    }else {
+                        res.status(500).send('PERSONAL ADMINISTRATIVO Y/O CONTRASENA INCORRECTA');
+                    }
+
+                });
+            }
+        });
+    },
+    getById: function (req, res, next) {
+        console.log(req.body);
+        personalAdmModel.findById(req.params.Id, function (err, result) {
+            if (err) {
+                next(err);
+            } else {
+                res.json({status: "success", message: "Personal Administrativo found!!!", data: {personalAdm:result}});
+            }
+        });
+    },
+//Metodo para retornar todos los videojuegos registrados en la base de datos
+    getAll: function (req, res, next) {
+        let personalAdmList = [];
+        personalAdmModel.find({}, function (err, personalAdm) {
+            if (err) {
+                next(err);
+            } else {
+                for (let personal of personalAdm) {
+                    personalAdmList.push({id: personal._id,
+                        apynombre: personal.apynombre,
+                        telefono: personal.telefono,
+                        password: personal.password,
+                        email: personal.email,
+                        consulta: personal.consulta,
+                        descripcion: personal.descripcion});
+                }
+                res.json({status: "success", message: "Personal Administrativo list found!!!", data: {personalAdm: personalAdmList}});
+
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
             }
         });
     },

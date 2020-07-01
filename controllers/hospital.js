@@ -1,8 +1,13 @@
 const hospitalModel = require('../models/hospital');
+<<<<<<< HEAD
+=======
+// const medicoModel = require('../models/medico');
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
 
 // Codificamos las operaciones que se podran realizar con relacion a los usuarios
 module.exports = {
     create: function (req, res, next) {
+<<<<<<< HEAD
 
         hospitalModel.create ({
                 nombre: req.body.nombre,
@@ -19,6 +24,26 @@ module.exports = {
                 else
                     res.json({status: "Ok", message: "Hospital agregado exitosamente!!!", data: result });
 
+=======
+
+        hospitalModel.create ({
+                nombre: req.body.nombre,
+                provincia: req.body.provincia,
+                localidad: req.body.localidad,
+                direccion: req.body.direccion,
+                telefono: req.body.telefono,
+                ApyNomDirector: req.body.ApyNomDirector,
+                capMaxPaciente: req.body.capMaxPaciente
+
+
+            },
+            function (err, result) {
+                if (err)
+                    next(err);
+                else
+                    res.json({status: "Ok", message: "Hospital agregado exitosamente!!!", data: result });
+
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
             });
     },
     getById: function (req, res, next) {
@@ -41,11 +66,20 @@ module.exports = {
                 for (let hosp of hospital) {
                     hospitalList.push({id: hosp._id,
                         nombre: hosp.nombre,
+<<<<<<< HEAD
+=======
+                        provincia: hosp.provincia,
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
                         localidad: hosp.localidad,
                         direccion: hosp.direccion,
                         telefono: hosp.telefono,
                         ApyNomDirector: hosp.ApyNomDirector,
+<<<<<<< HEAD
                         capMaxPaciente: hosp.capMaxPaciente
+=======
+                        capMaxPaciente: hosp.capMaxPaciente,
+                        medicos: hosp.medicos
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
                     });
                 }
                 res.json({status: "success", message: "Hospital list found!!!", data: {hospital: hospitalList}});

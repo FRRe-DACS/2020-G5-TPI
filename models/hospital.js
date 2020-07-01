@@ -11,6 +11,13 @@ const hospitalSchema = new Schema({
         trim: true,
         required: true,
     },
+<<<<<<< HEAD
+=======
+    provincia: {
+        type: String,
+        required: true
+    },
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
     localidad: {
         type: String,
         trim: true,
@@ -35,7 +42,14 @@ const hospitalSchema = new Schema({
         type: Number,
         trim: true,
         required: true
+<<<<<<< HEAD
     }
+=======
+    },
+    medicos:[{ type: Schema.Types.ObjectId,
+        ref: 'Medico'
+    }]
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
 
 });
 
