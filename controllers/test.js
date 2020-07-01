@@ -134,7 +134,7 @@ module.exports = {
                        //Condicion Sintomatico/Asintomatico
                        Condicion:req.body.Condicion,
                        Fechaalta:req.body.Fechaalta,
-                       Fechadedefuncion:req.body.Fechadedefuncion}),
+                       Fechadedefuncion:req.body.Fechadedefuncion})
                 }
                 res.json({status: "success", message: "Test list found!!! Lista de test encontrada !!!", data: {tests: testList}});
 
