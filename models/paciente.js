@@ -9,16 +9,16 @@ const Schema = mongoose.Schema;
 // Creamos el objeto del esquema con sus correspondientes campos
 const PacienteSchema = new Schema({
 
-    nombre:string,
-    apellido:string,
-    dni:integer,
+    nombre:String,
+    apellido:String,
+    dni:Number,
     //Direccion y localidad donde reside
-    direccion:string,
-    localidad:string,
-    genero:string,
-    fechanacimiento:string,
-    telefono:integer,
-    email:string,
+    direccion:String,
+    localidad:String,
+    genero:String,
+    fechanacimiento:String,
+    telefono:Number,
+    email:String,
 
 });
 

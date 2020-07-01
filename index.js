@@ -29,15 +29,16 @@ app.listen(port,() => {
 
 
 // Controllers de medico
-const medicoControl = require('./controllers/medico');
+//const medicoControl = require('./controllers/medico');
 
 // Routes
 app.use('/api/medico', require('./rutas/medico.js'));
 
-app.post('/api/personalAdm', require('./rutas/personalAdm.js'));
+app.use('/api/personalAdm', require('./rutas/personalAdm.js'));
 
-app.post('/api/test', require('./rutas/test.js'));
+app.use('/api/test', require('./rutas/test.js'));
 
+app.use('/api/paciente', require('./rutas/paciente.js'));
 
 /*
 app.post('/api/medico/create/', medicoControl.create);
@@ -63,7 +64,7 @@ app.put('/api/medico/update/:id', medicoControl.update);
 app.delete('/api/medico/delete/:id', medicoControl.delete);
 */
 // Controllers de test
-const testControl = require('./controllers/test');
+//const testControl = require('./controllers/test');
 
 // Routes
 /*
@@ -95,7 +96,7 @@ app.delete('/api/historiacli/delete/:id', historiacliControl.deleteById);
 app.get('/api/historiacli/:Id', historiacliControl.getById);
 app.get('/api/historiacli', historiacliControl.getAll);
 // Controllers de personal adm
-const personalAdmControl = require('./controllers/personalAdm');
+//const personalAdmControl = require('./controllers/personalAdm');
 
 
 // Routes
