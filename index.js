@@ -20,7 +20,7 @@ app.listen(port,() => {
 
 
 
-const logger = require('morgan');
+// const logger = require('morgan');
 
 
 // Controllers de medico
@@ -31,7 +31,8 @@ app.post('/api/medico/create', medicoControl.create);
 app.put('/api/medico/update/:Id', medicoControl.updateById);
 app.get('/api/medico', medicoControl.getAll);
 app.get('/api/medico/:Id', medicoControl.getById);
-app.post('/api/medico/autenticar', medicoControl.authenticate );
+//app.post('/api/medico/autenticar', medicoControl.authenticate );
+app.delete('/api/medico/delete/:Id', medicoControl.deleteById );
 
 
 
@@ -46,30 +47,39 @@ const testControl = require('./controllers/test');
 
 // Routes
 app.post('/api/test/create', testControl.create);
-app.put('/api/test/update/:id', testControl.update);
-app.delete('/api/test/delete/:id', testControl.delete);
+app.put('/api/test/update/:id', testControl.updateById);
+app.delete('/api/test/delete/:id', testControl.deleteById);
+app.get('/api/test/:Id', testControl.getById);
+app.get('/api/test', testControl.getAll);
+
 
 // Controllers de test
 const hospitalControl = require('./controllers/hospital');
 
 // Routes
 app.post('/api/hospital/create', hospitalControl.create);
-app.put('/api/hospital/update/:id',hospitalControl.update);
-app.delete('/api/hospital/delete/:id', hospitalControl.delete);
+app.put('/api/hospital/update/:Id',hospitalControl.updateById);
+app.get('/api/hospital',hospitalControl.getAll);
+app.get('/api/hospital/:Id',hospitalControl.getById);
+app.delete('/api/hospital/delete/:Id', hospitalControl.deleteById);
 
-// Controllers de test
+// Controllers de  historia clinica
 const historiacliControl = require('./controllers/historiaclinica');
 
 // Routes
 app.post('/api/historiacli/create', historiacliControl.create);
-app.put('/api/historiacli/update/:id',historiacliControl.update);
-app.delete('/api/historiacli/delete/:id', historiacliControl.delete);
-
+app.put('/api/historiacli/update/:id',historiacliControl.updateById);
+app.delete('/api/historiacli/delete/:id', historiacliControl.deleteById);
+app.get('/api/historiacli/:Id', historiacliControl.getById);
+app.get('/api/historiacli', historiacliControl.getAll);
 // Controllers de personal adm
 const personalAdmControl = require('./controllers/personalAdm');
 
+
 // Routes
 app.post('/api/personalAdm/create', personalAdmControl.create);
-app.put('/api/personalAdm/update/:id',personalAdmControl.update);
-app.delete('/api/personalAdm/delete/:id', personalAdmControl.delete);
+app.put('/api/personalAdm/update/:Id',personalAdmControl.updateById);
+app.delete('/api/personalAdm/delete/:Id', personalAdmControl.deleteById);
+app.get('/api/personalAdm',personalAdmControl.getAll);
+app.get('/api/personalAdm/:Id',personalAdmControl.getById);
 

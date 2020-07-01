@@ -4,11 +4,29 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 
 const testSchema = new mongoose.Schema({
-    Fechaprimeros_sintomas:String ,
-    Fechaconsulta: String ,
-    Sintomas: String ,
-    Tipodemuestra: String ,
-    Resultado: String ,
+    Fech_1eros_sintoms:{
+        type: String,
+    },
+    Fech_consult: {
+        type: Date,
+        trim: true,
+        required: true,
+    } ,
+    Sintomas: {
+        type: String,
+        trim: true,
+        required: true,
+    } ,
+    Tipodemuestra: {
+        type: String,
+        trim: true,
+        required: true,
+    },
+    Resultado: {
+        type: String,
+        trim: true,
+        required: true,
+    } ,
     Riesgo: Boolean ,
 
 }) ;
@@ -16,3 +34,7 @@ const testSchema = new mongoose.Schema({
 const Test = mongoose.model('Test', testSchema);
 
 module.exports = Test;
+
+
+
+

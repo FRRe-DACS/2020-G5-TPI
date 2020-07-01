@@ -4,12 +4,12 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 
 const historiacliSchema = new mongoose.Schema({
-    nrohistoriacli: Number ,
+
     Habitofisiologico:String ,
     Habitotoxico: String ,
-    Enfermedadesprevia: String ,
-    Fechaultimoasiento: String ,
-    Datosfisico: Boolean ,
+    Enfermedadesprevia:{type:String ,required: true},
+    Fechaultimoasiento:{type:String ,required:true},
+    Datosfisico:{type:String ,required:true},
 
 }) ;
 
