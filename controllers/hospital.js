@@ -7,6 +7,7 @@ module.exports = {
 
         hospitalModel.create ({
                 nombre: req.body.nombre,
+                provincia: req.body.provincia,
                 localidad: req.body.localidad,
                 direccion: req.body.direccion,
                 telefono: req.body.telefono,
@@ -43,6 +44,7 @@ module.exports = {
                 for (let hosp of hospital) {
                     hospitalList.push({id: hosp._id,
                         nombre: hosp.nombre,
+                        provincia: hosp.provincia,
                         localidad: hosp.localidad,
                         direccion: hosp.direccion,
                         telefono: hosp.telefono,
