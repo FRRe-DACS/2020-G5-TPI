@@ -11,6 +11,10 @@ const hospitalSchema = new Schema({
         trim: true,
         required: true,
     },
+    provincia: {
+        type: String,
+        required: true
+    },
     localidad: {
         type: String,
         trim: true,
