@@ -8,8 +8,6 @@ const {create, authenticate, asigHospital, updateById, getAll, getById, deleteBy
 
 ruta.route('/')
     .get(getAll)
-    //.post(create);
-
 
 ruta.route('/:Id')
     .get(getById);
@@ -17,4 +15,18 @@ ruta.route('/:Id')
 ruta.route('/update/:Id')
     .put(updateById)
 
+ruta.route('/create/')
+    .post(create);
+
+ruta.route('/autenticar')
+    .post(authenticate);
+
+ruta.route('/create/:_id')
+    .post(asigHospital);
+
+ruta.route('/delete/:Id')
+    .delete(deleteById);
+
+
 module.exports = ruta;
+

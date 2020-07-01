@@ -4,6 +4,31 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 
 const testSchema = new mongoose.Schema({
+<<<<<<< HEAD
+    Fech_1eros_sintoms:{
+        type: String,
+    },
+    Fech_consult: {
+        type: Date,
+        trim: true,
+        required: true,
+    } ,
+    Sintomas: {
+        type: String,
+        trim: true,
+        required: true,
+    } ,
+    Tipodemuestra: {
+        type: String,
+        trim: true,
+        required: true,
+    },
+    Resultado: {
+        type: String,
+        trim: true,
+        required: true,
+    } ,
+=======
     Fechacreacion:Date,
     //Sintomas
     Fecha1erossintomas:{type: Date},
@@ -24,6 +49,7 @@ const testSchema = new mongoose.Schema({
     Fumador:Boolean,
 
     //evaluaciondel medico
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
     Riesgo: Boolean ,
     //Tipodemuestraquesetomo
     Hisopadonasofaringeo: Boolean,

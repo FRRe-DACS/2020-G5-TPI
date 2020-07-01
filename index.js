@@ -33,8 +33,11 @@ const medicoControl = require('./controllers/medico');
 
 // Routes
 app.use('/api/medico', require('./rutas/medico.js'));
+app.post('/api/personalAdm', require('./rutas/personalAdm.js'));
 
-// app.use('/api/paciente', require('./rutas/paciente.js'));
+app.post('/api/test', require('./rutas/test.js'));
+
+
 
 /*
 app.post('/api/medico/create/', medicoControl.create);
@@ -43,6 +46,10 @@ app.post('/api/medico/create/:_id', medicoControl.asigHospital);
 app.put('/api/medico/update/:Id', medicoControl.updateById);
 app.get('/api/medico', medicoControl.getAll);
 app.get('/api/medico/:Id', medicoControl.getById);
+
+
+//app.post('/api/medico/autenticar', medicoControl.authenticate );
+
 app.delete('/api/medico/delete/:Id', medicoControl.deleteById );
 app.put('/api/medico/update/:id', medicoControl.update);
 app.delete('/api/medico/delete/:id', medicoControl.delete);
@@ -51,17 +58,21 @@ app.delete('/api/medico/delete/:id', medicoControl.delete);
 const testControl = require('./controllers/test');
 
 // Routes
+/*
 app.post('/api/test/create', testControl.create);
 app.put('/api/test/update/:id', testControl.updateById);
 app.delete('/api/test/delete/:id', testControl.deleteById);
 app.get('/api/test/:Id', testControl.getById);
 app.get('/api/test', testControl.getAll);
 
+*/
+
 
 // Controllers de hospital
 const hospitalControl = require('./controllers/hospital');
 
 // Routes
+//nos ensartaron los de ministerio tienen que manejar estos datos
 app.post('/api/hospital/create', hospitalControl.create);
 app.put('/api/hospital/update/:Id',hospitalControl.updateById);
 app.get('/api/hospital',hospitalControl.getAll);
@@ -82,15 +93,21 @@ const personalAdmControl = require('./controllers/personalAdm');
 
 
 // Routes
+/*
 app.post('/api/personalAdm/create', personalAdmControl.create);
+
 app.post('/api/personalAdm/autenticar/', personalAdmControl.authenticate );
+
 app.put('/api/personalAdm/update/:Id',personalAdmControl.updateById);
 app.delete('/api/personalAdm/delete/:Id', personalAdmControl.deleteById);
 app.get('/api/personalAdm',personalAdmControl.getAll);
 app.get('/api/personalAdm/:Id',personalAdmControl.getById);
 
+
+*/
 // Controllers de recurso
 const recursoControl = require('./controllers/recurso');
+
 
 // Routes
 app.post('/api/recurso/create', recursoControl.create);

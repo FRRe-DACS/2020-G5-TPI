@@ -3,6 +3,12 @@ const modeloTest = require('../models/test');
 module.exports = {
     create: (req, res) => {
         let test = new modeloTest({
+<<<<<<< HEAD
+            Fech_1eros_sintoms:req.body.Fech_1eros_sintoms,
+            Fech_consult: new Date(),
+            Sintomas: req.body.Sintomas,
+            Tipodemuestra : req.body.Tipodemuestra,
+=======
 
             Fechacreacion:req.body.Fechacreacion,
             //Sintomas
@@ -32,6 +38,7 @@ module.exports = {
             Fechatomademuestra:req.body.Fechatomademuestra,
 
             //Resultadosyevolucion
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
             Resultado: req.body.Resultado,
             //Datosdelaspersonasconlaqueestuvoencontacto:[],
             Fechainternacion:req.body.Fechainternacion,
@@ -97,6 +104,14 @@ module.exports = {
             } else {
                 for (let tes of test) {
                    testList.push({id: tes._id,
+<<<<<<< HEAD
+                        Fech_1eros_sintoms: tes. Fech_1eros_sintoms,
+                        Fech_consult: tes.Fech_consult,
+                        Sintomas: tes.Sintomas,
+                        Tipodemuestra: tes.Tipodemuestra,
+                        Resultado:tes.Resultado,
+                         Riesgo: tes.Riesgo});
+=======
 
                        Fechacreacion:req.body.Fechacreacion,
                        //Sintomas
@@ -135,6 +150,7 @@ module.exports = {
                        Condicion:req.body.Condicion,
                        Fechaalta:req.body.Fechaalta,
                        Fechadedefuncion:req.body.Fechadedefuncion})
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
                 }
                 res.json({status: "success", message: "Test list found!!! Lista de test encontrada !!!", data: {tests: testList}});
 

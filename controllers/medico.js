@@ -29,6 +29,27 @@ module.exports = {
 
             });
     },
+<<<<<<< HEAD
+    /*
+    authenticate: function (req, res, next) {
+        medicoModel.findOne({email: req.body.email}, function (err, medicoInfo) {
+            if (err) {
+                next(err);
+            } else {
+                if (bcrypt.compareSync(req.body.password, medicoInfo.password)) {
+                    const token = jwt.sign({id: medicoInfo._id}, req.app.get('secretKey'), {expiresIn: '1h'});
+                    res.json({
+                        status: "Ok",
+                        message: "El Medico ha sido autenticado!!!",
+                        data: {medico: userInfo, token: token}
+                    });
+                } else {
+                    res.json({status: "error", message: "Invalid email/password!!", data: null});
+                }
+            }
+        });
+    },*/
+=======
     asigHospital: async function(req,res) {
         // crear medico para el hospital
         const medicoN = new medicoModel(req.body)
@@ -67,6 +88,7 @@ module.exports = {
             }
             });
     },
+>>>>>>> 086dd0f2d960565665b7374d986928808126e543
     getById: function (req, res, next) {
         console.log(req.body);
         medicoModel.findById(req.params.Id, function (err, result) {
