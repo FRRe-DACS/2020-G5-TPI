@@ -32,6 +32,10 @@ app.listen(port,() => {
 const medicoControl = require('./controllers/medico');
 
 // Routes
+app.use('/api/medico', require('./rutas/medico.js'));
+
+
+/*
 app.post('/api/medico/create/', medicoControl.create);
 app.post('/api/medico/autenticar/', medicoControl.authenticate );
 
@@ -50,10 +54,10 @@ app.delete('/api/medico/delete/:Id', medicoControl.deleteById );
 
 
 
-/*
-app.put('/api/medico/update/:id', medicoControl.update);
-app.delete('/api/medico/delete/:id', medicoControl.delete);*/
 
+app.put('/api/medico/update/:id', medicoControl.update);
+app.delete('/api/medico/delete/:id', medicoControl.delete);
+*/
 // Controllers de test
 const testControl = require('./controllers/test');
 
