@@ -4,27 +4,46 @@ const mongoose = require('mongoose'); //mongoose mediador entre la base de datos
 
 
 const testSchema = new mongoose.Schema({
-    //datos personales
-    Apynombredeltesteado:{type:string},
-    Localidadorigen:{type:sring},
-    Localidadinternacion:{type:string},
-    Provincia:{type:string},
-    Direccion:{type:string},
-    //datos primeros sintomas
-    Fech_1eros_sintoms:{type: Date,required: true,},
-    Fech_consult: {type: Date,trim: true,required: true,} ,
-    Sintomas: {type: String,trim: true,required: true,  } ,
-    Enfermedadespreviascomorbilidades:{type:string},
+    Fechacreacion:Date,
+    //Sintomas
+    Fecha1erossintomas:{type: Date},
+    Fiebremayor38grado:{type:String},
+    Diarrea:{type:String},
+    Vomitos:{type:String},
+    Dolorgarganta:{type:String},
+    Rechazoalimento:{type:String},
+    Perdidadelolfato:{type:String},
+
+    //Enfermedadespreviascomorbilidades/PATOLOGIAS
+    Obesidad:Boolean,
+    Embarazo:Boolean,
+    Hipertensionarterial:Boolean,
+    Bronquiolitis:Boolean,
+    Asma:Boolean,
+    Tuberculosis:Boolean,
+    Fumador:Boolean,
+
     //evaluaciondel medico
-    Tipodemuestra: { type: String,trim: true,required: true,},
-    Evolucion:{type:string},
     Riesgo: Boolean ,
+    //Tipodemuestraquesetomo
+    Hisopadonasofaringeo: Boolean,
+    Hisopadoorofaringe:Boolean,
+    Hisopodaonasofaringeo:Boolean,
+    Fechatomademuestra:Date,
+
+    //Resultadosyevolucion
     Resultado: Boolean ,
+    //Se encarga el personal administrativo de cargar las personas con la que estuvo en contacto
+    Datosdelaspersonasconlaqueestuvoencontacto:[],
+    Fechainternacion:{type: Date},
+    //Critico o estable
+    Estado:{String},
+    //Condicion Sintomatico/Asintomatico
+    Condicion:String,
     Fechaalta:String,
     Fechadedefuncion:String,
-    Datosdelaspersonasconlaqueestuvoencontacto:String,
 
-}) ;
+ }) ;
 
 const Test = mongoose.model('Test', testSchema);
 
