@@ -1,7 +1,24 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import AlertaContext from '../../context/alertas/alertasContext';
+import AuthContext from '../../context/autenticacion/authContext';
 
-const Login = () => {
+const Login = (props) => {
+    const alertaContext = useContext(AlertaContext);
+    const { alerta, mostrarAlerta } = alertaContext;
+
+    const authContext = useContext(AuthContext);
+    const {mensaje, autenticado, iniciarSesion } = authContext;
+
+    useEffect(() => {
+        // if (autenticado) {
+        //     props.history.push('/home')
+        // }
+        if (mensaje) {
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+    }, [mensaje, autenticado, props.history]);
+
     //State para iniciar sesion
     const [usuario, guardarUsuario] = useState({
         apynombre: '',
@@ -22,10 +39,11 @@ const Login = () => {
     const onSubmit = async e => {
         e.preventDefault();
         //Validar que no haya campos vacios
-        await axios.post('https://grupo5-tpi-backend.herokuapp.com/medico/autenticar/',{
-            apynombre: this.state.apynombre,password:this.state.password
-        })
+        if(apynombre.trim() === '' || password.trim() === '') {
+            mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+        }
 
+        iniciarSesion({apynombre, password});
     }
 
     return ( 
@@ -59,7 +77,10 @@ const Login = () => {
                             onChange={onChange}
                         />
                     </div>
-
+                    {alerta 
+                        ? ( <div className={`alerta ${alerta.categoria}`}> {alerta.msg} </div>) 
+                        : null 
+                    }                    
                     <div className="campo-form">
                         <input type="submit" className="btn btn-primario btn-block"
                         value="Iniciar Sesion" />

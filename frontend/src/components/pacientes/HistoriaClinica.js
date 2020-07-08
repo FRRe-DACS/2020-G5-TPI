@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const HistoriaClinica = () => {
     return ( 
-        <li className="tarea sombra">
-            <p>Historia Clinica</p>
+        <Fragment>
+            <div className="tarea sombra">
+                <p>Historia Clinica</p>
 
-            <div className="acciones">
-                <button
+                {/* <button
                     type="button"
                     className="btn btn-eliminar"
-                >Ver</button>
+                >Ver</button> */}
             </div>
-        </li>
+
+            <div className="informacion-form sombra-dark">
+            <form>
+                <div className="campo-form">
+                    <label className="informacion-label">Fecha ultimo asiento</label>
+
+                    <input 
+                        type="text"
+                        id="apynombre"
+                        name="apynombre"
+                        value="03/07/2020"
+                    />
+                </div>
+                <div className="campo-form">
+                    <label className="informacion-label">Enfermedades</label>
+
+                    <input 
+                        type="text"
+                        id="domicilio"
+                        name="domicilio"
+                        value="enfermedades"
+                    />
+                </div>
+            </form>
+            </div>
+        </Fragment>
      );
 }
 

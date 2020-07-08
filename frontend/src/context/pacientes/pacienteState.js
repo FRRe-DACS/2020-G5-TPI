@@ -1,27 +1,74 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import pacienteContext from './pacienteContext';
-import pacienteReducer from './pacienteReducer'
-import { PACIENTE_ACTUAL } from '../../types';
+import pacienteReducer from './pacienteReducer';
+import axios from 'axios'
+import { 
+    PACIENTE_ACTUAL,
+    PACIENTE_TEST,
+    AGREGAR_PACIENTE,
+    MOSTRAR_PACIENTE,
+    OCULTAR_PACIENTE,
+} from '../../types';
 
 const PacienteState = props => {
+
+    // const Listapacientes = () => {
+    //     const [pacientes, setPacientes] = useState([]);
+        
+    //     useEffect(() => {
+    //         axios.get("https://backendtpi-g5.herokuapp.com/api/paciente")
+    //         .then(result => {
+    //             pacientes = result.data.data.paciente;
+    //             setPacientes(pacientes);
+    //         })
+    //     })
+    // }
+
     const initialState = {
         pacientes : [
-            {id: 1, nombre: 'Paciente 1'},
-            {id: 2, nombre: 'Paciente 2'},
-            {id: 3, nombre: 'Paciente 3'},
-            {id: 4, nombre: 'Paciente 4'}
+            {id: 1, nombre: 'Maximiliano', apellido : 'Zurlo', dni : 372648, localidad : 'Resistencia', telefono : '+54326488922', email : 'maxiazurlo@gmail.com'},
+            {id: 2, nombre: 'Roberto', apellido : 'Perez', dni : 368821, localidad : 'Resistencia', telefono : '+54326488922', email : 'maxiazurlo@gmail.com'},
+            {id: 3, nombre: 'Juan', apellido : 'Fernandez', dni : 388821, localidad : 'Resistencia', telefono : '+54326488922', email : 'maxiazurlo@gmail.com'},
+            {id: 4, nombre: 'Emilio', apellido : 'Ramirez', dni : 3669662, localidad : 'Resistencia', telefono : '+54326488922', email : 'maxiazurlo@gmail.com'},
         ],
-        paciente: null
+        pacientetest: null,
+        showPaciente: false,
     }
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(pacienteReducer, initialState)
 
-    //Selecciona el paciente que el medio dio click
+    const obtenerPaciente = testId => {
+        dispatch({
+            type: PACIENTE_TEST,
+            payload: testId
+        })
+    }
+
+    const agregarPaciente = pacientes => {
+        dispatch({
+            type: AGREGAR_PACIENTE,
+            payload: pacientes
+        })
+    }
+
+    //Selecciona el paciente que el medico dio click
     const pacienteActual = pacienteID => {
         dispatch({
             type: PACIENTE_ACTUAL,
             payload: pacienteID
+        })
+    }
+
+    const mostrarPaciente = () => {
+        dispatch({
+            type: MOSTRAR_PACIENTE,
+        })
+    }
+
+    const ocultarPaciente = () => {
+        dispatch({
+            type: OCULTAR_PACIENTE
         })
     }
 
@@ -30,10 +77,16 @@ const PacienteState = props => {
             value={{
                 pacientes: state.pacientes,
                 paciente: state.paciente,
-                pacienteActual
+                pacientetest: state.pacientetest,
+                showPaciente: state.showPaciente,
+                pacienteActual,
+                obtenerPaciente,
+                agregarPaciente,
+                mostrarPaciente,
+                ocultarPaciente
             }}
         >
-            {props.children}
+        {props.children}
         </pacienteContext.Provider>
     )
 }
