@@ -50,7 +50,9 @@ module.exports = {
                         telefono: hosp.telefono,
                         ApyNomDirector: hosp.ApyNomDirector,
                         capMaxPaciente: hosp.capMaxPaciente,
-                        medicos: hosp.medicos
+                        medicos: hosp.medicos,
+                        recursos: hosp.recursos,
+                        personalAdms: hosp.personalAdms
                     });
                 }
                 res.json({status: "success", message: "Hospital list found!!!", data: {hospital: hospitalList}});

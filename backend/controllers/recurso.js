@@ -1,12 +1,14 @@
 const modelRecurso = require('../models/recurso');
+const hospitalModel = require('../models/hospital');
 
 module.exports = {
     create: (req, res) => {
         let test = new modelRecurso({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            estado: req.body.estado,
+            id_solicitud: req.id_solicitud,
             cantidad: req.body.cantidad,
+            estado:req.body.estado
         });
 
         test.save()
@@ -17,8 +19,22 @@ module.exports = {
                 res.json({success: false, result: err});
             });
     },
-
-
+    asigHospital: async function(req,res) {
+        // crear recurso para el hospital
+        const recursoN = new modelRecurso(req.body)
+        //buscar el hospital para asignar un recurso
+        const hospital = await hospitalModel.findById(req.params)
+        //asignar el hospital como lugar de destino del recurso
+        recursoN.hospitals = hospital
+        //guardamos el recurso para hospital
+        await recursoN.save()
+        //asignar el recurso dentro del array de recurso del hospital
+        hospital.recursos.push(recursoN)
+        //guardar el recurso
+        await hospital.save();
+        //enviar al hospital el recurso
+        res.send(recursoN)
+    },
     updateById: (req, res) => {
         // Recogemos un parámetro por la url
         var recursoId = req.params.id;
@@ -54,7 +70,7 @@ module.exports = {
         });
     },
 
-    //Metodo para retornar todos los test registrados en la base de datos
+   /* //Metodo para retornar todos los test registrados en la base de datos
     getAll: function (req, res, next) {
         let recursoList = [];
         modelRecurso.find({}, function (err, recurso) {
@@ -66,8 +82,9 @@ module.exports = {
                         id: recurs._id,
                         nombre: recurs.nombre,
                         descripcion: recurs.descripcion,
-                        estado: recurs.estado,
+                        id_solicitud:recurs.id_solicitud,
                         cantidad: recurs.cantidad,
+                        estado: recurs.estado,
                     });
                 }
                 res.json({
@@ -77,10 +94,5 @@ module.exports = {
                 });
 
             }
-        });
-    },
-
-
-
-
+        });*/
 }

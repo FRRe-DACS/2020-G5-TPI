@@ -3,6 +3,7 @@
 // const hospitalModel = require('../models/hospital');
 
 const pacienteModel = require('../models/paciente');
+const medicoModel = require('../models/medico');
 
 // Codificamos las operaciones que se podran realizar con relacion a los usuarios
 module.exports = {
@@ -19,33 +20,43 @@ module.exports = {
                 fechanacimiento:req.body.fechanacimiento,
                 telefono:req.body.telefono,
                 email:req.body.email,
+                //Historiaclinica
+                //similar al test y cuando el paciente da positivo se va agregar a esta historia clinica tambien las enfermedades que tuvo el paciente
+                Habitofisiologico:req.body.Habitofisiologico , //mecanismos de succion,movimientos corporales deglucion y respiracion nasal
+                Habitotoxico: req.body.Habitotoxico ,// fumar /beber alcohol
+                Enfermedadesprevia:req.body.Enfermedadesprevia, //asma bronquiolitis
+                Fechaultimoasiento:req.body.Fechaultimoasiento,
+                //Datosfisicogit
+                Peso:req.body.Peso,
+                Altura:req.body.Altura,
+                Edad:req.body.Edad,
             },
             function (err, result) {
                 if (err)
                     next(err);
                 else
-                    res.json({status: "Ok", message: "Medico agregado exitosamente!!!", data: result });
+                    res.json({status: "Ok", message: "Paciente agregado exitosamente!!!", data: result });
 
             });
     },
-   /*
-    asigHospital: async function(req,res) {
-        // crear medico para el hospital
-        const medicoN = new medicoModel(req.body)
-        //buscar el hospital para asignar un medico
-        const hospital = await hospitalModel.findById(req.params)
-        //asignar el hospital como lugar de trabajo del medico
-        medicoN.hospitals =hospital
-        //guardamos el medico para hospital
-        await medicoN.save()
-        //asignar el medico dentro del array de medicos del hospital
-        hospital.medicos.push(medicoN)
-        //guardar el medico
-        await hospital.save();
-        //enviar al hospital el medico
-        res.send(medicoN)
+
+   asigMedico: async function(req,res) {
+        // crear paciente para el medico
+        const pacienteN = new pacienteModel(req.body)
+        //buscar el medico para asignar un paciente
+        const medico = await medicoModel.findById(req.params)
+        //asignar el medico como el que realiza el seguimiento del paciente
+        pacienteN.medicos =medico
+        //guardamos el paciente para medico
+        await pacienteN.save()
+        //asignar el paciente dentro del array de medicos del medico
+        medico.pacientes.push(pacienteN)
+        //guardar el paciente
+        await medico.save();
+        //enviar al medico el paciente
+        res.send(pacienteN)
     },
-*/
+
 
     getById: function (req, res, next) {
         console.log(req.body);
@@ -60,7 +71,7 @@ module.exports = {
 //Metodo para retornar todos los medicos registrados en la base de datos
     getAll: function (req, res, next) {
         let pacienteList = [];
-        pacienteModel.find({}, function (err, medico) {
+        pacienteModel.find({}, function (err, paciente) {
             if (err) {
                 next(err);
             } else {
@@ -75,9 +86,18 @@ module.exports = {
                         genero:pacient.genero,
                         fechanacimiento:pacient.fechanacimiento,
                         telefono:pacient.telefono,
-                        email:pacient.email});
+                        email:pacient.email,
+                        Habitofisiologico:pacient.Habitofisiologico ,
+                        Habitotoxico: pacient.Habitotoxico ,
+                        Enfermedadesprevia:pacient.Enfermedadesprevia,
+                        Fechaultimoasiento:pacient.Fechaultimoasiento,
+                        //Datosfisicogit
+                        Peso:pacient.Peso,
+                        Altura:pacient.Altura,
+                        Edad:pacient.Edad,
+                        tests:pacient.tests });
                 }
-                res.json({status: "success", message: "Medico list found!!!", data: {medico: medicoList}});
+                res.json({status: "success", message: "Paciente list found!!!", data: {paciente: pacienteList}});
 
             }
         });

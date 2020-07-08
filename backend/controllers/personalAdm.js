@@ -1,4 +1,5 @@
 const personalAdmModel = require('../models/personalAdm');
+const hospitalModel = require('../models/hospital');
 //
 // Cargamos el módulo de bcrypt
 const bcrypt = require('bcrypt');
@@ -25,6 +26,22 @@ module.exports = {
                     res.json({status: "Ok", message: "Personal Administrativo agregado exitosamente!!!", data: result });
 
             });
+    },
+    asigHospital: async function(req,res) {
+        // crear medico para el hospital
+        const PersonalAdmN = new personalAdmModel(req.body)
+        //buscar el hospital para asignar un medico
+        const hospital = await hospitalModel.findById(req.params)
+        //asignar el hospital como lugar de trabajo del medico
+        PersonalAdmN.hospitals =hospital
+        //guardamos el medico para hospital
+        await PersonalAdmN.save()
+        //asignar el medico dentro del array de medicos del hospital
+        hospital.personalAdms.push(PersonalAdmN)
+        //guardar el medico
+        await hospital.save();
+        //enviar al hospital el medico
+        res.send(PersonalAdmN)
     },
     authenticate: function (req, res ) {
         const {apynombre, password} = req.body;

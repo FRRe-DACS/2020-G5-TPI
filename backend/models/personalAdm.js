@@ -38,6 +38,10 @@ const personalAdmSchema = new Schema({
         type: String,
         trim: true,
         required: false
+    },
+    hospitals :{
+        type: Schema.Types.ObjectID,
+        ref: 'Hospital'
     }
 });
 personalAdmSchema.pre('save', function(next){

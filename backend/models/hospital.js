@@ -13,7 +13,7 @@ const hospitalSchema = new Schema({
     },
     provincia: {
         type: String,
-        required: false,
+        required: true
     },
     localidad: {
         type: String,
@@ -42,8 +42,15 @@ const hospitalSchema = new Schema({
     },
     medicos:[{ type: Schema.Types.ObjectId,
         ref: 'Medico'
-    }]
 
+    }],
+    recursos:[{ type: Schema.Types.ObjectId,
+        ref: 'Recurso'
+    }],
+    personalAdms:[{ type: Schema.Types.ObjectId,
+        ref: 'PersonalAdm'
+    }]
+      
 });
 
 

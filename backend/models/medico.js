@@ -45,17 +45,17 @@ const MedicoSchema = new Schema({
 	},
 	email: {
 		type: String,
-		trim: true,
-		required: true
+
 	},
 	hospitals :{
 		type: Schema.Types.ObjectID,
 		ref: 'Hospital'
-	}
-
-});
+	},
+	pacientes:[{ type: Schema.Types.ObjectId,
+		ref: 'Paciente'	}]
+		});
 // Antes de almacenar la contraseña en la base de datos la encriptamos con Bcrypt, esto es posible gracias al middleware de mongoose
-	MedicoSchema.pre('save', function(next){
+MedicoSchema.pre('save', function(next){
 	if (this.isNew || this.isModified('password')){
 
 		const document = this;

@@ -30,6 +30,7 @@ module.exports = {
             });
     },
     asigHospital: async function(req,res) {
+
         // crear medico para el hospital
         const medicoN = new medicoModel(req.body)
         //buscar el hospital para asignar un medico
@@ -91,7 +92,8 @@ module.exports = {
                         especialidad: medic.especialidad,
                         experiencia: medic.experiencia,
                         telefono: medic.telefono,
-                        cantpac: medic.cantpac});
+                        cantpac: medic.cantpac,
+                        pacientes: medic.pacientes});
                 }
                 res.json({status: "success", message: "Medico list found!!!", data: {medico: medicoList}});
 

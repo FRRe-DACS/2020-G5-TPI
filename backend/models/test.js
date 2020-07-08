@@ -1,19 +1,18 @@
 'use strict'
 
 const mongoose = require('mongoose'); //mongoose mediador entre la base de datos y nuestro backend
+const Schema = mongoose.Schema;
 
-
-const testSchema = new mongoose.Schema({
+const testSchema = new Schema({
     Fechacreacion:Date,
     //Sintomas
     Fecha1erossintomas:{type: Date},
-    Fiebremayor38grado:{type:String},
-    Diarrea:{type:String},
-    Vomitos:{type:String},
-    Dolorgarganta:{type:String},
-    Rechazoalimento:{type:String},
-    Perdidadelolfato:{type:String},
-
+    Sintomas:{type:String},
+    Diarrea:Boolean,
+    Vomitos:Boolean,
+    Dolorgarganta:Boolean,
+    Rechazoalimento:Boolean,
+    Perdidadelolfato:Boolean,
     //Enfermedadespreviascomorbilidades/PATOLOGIAS
     Obesidad:Boolean,
     Embarazo:Boolean,
@@ -34,15 +33,17 @@ const testSchema = new mongoose.Schema({
     //Resultadosyevolucion
     Resultado: Boolean ,
     //Se encarga el personal administrativo de cargar las personas con la que estuvo en contacto
-    Datosdelaspersonasconlaqueestuvoencontacto:[],
+    Personasconcontacto:String,
     Fechainternacion:{type: Date},
     //Critico o estable
     Estado:{String},
     //Condicion Sintomatico/Asintomatico
     Condicion:String,
     Fechaalta:String,
-    Fechadedefuncion:String,
-
+    Fechadedefuncion:Date,
+    pacientes :{
+        type: Schema.Types.ObjectID,
+        ref: 'Paciente'},
  }) ;
 
 const Test = mongoose.model('Test', testSchema);

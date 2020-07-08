@@ -1,9 +1,9 @@
 const modeloTest = require('../models/test');
-
+const pacienteModel = require('../models/paciente');
 module.exports = {
     create: (req, res) => {
         let test = new modeloTest({
-
+            //fecha cuando da positivo como campo obligatorio momento que da el caso positivo o negativo
             Fechacreacion:req.body.Fechacreacion,
             //Sintomas
             Fecha1erossintomas:req.body.Fecha1erossintomas,
@@ -52,6 +52,24 @@ module.exports = {
             });
     },
 
+    asigPaciente: async function(req,res) {
+
+        // crear test para el paciente
+        const testN = new modeloTest(req.body)
+        //buscar el paciente para asignar un test
+        const paciente = await pacienteModel.findById(req.params)
+        //asignar al paciente un test
+        testN.pacientes = paciente
+        //guardamos el test para el paciente
+        await testN.save()
+        //asignar el test dentro del array de pacientes del hospital
+        paciente.tests.push(testN)
+        //guardar el test en paciente
+        await paciente.save();
+        //enviar al paciente el test
+        res.send(testN)
+
+        },
 
     updateById: (req, res) => {
         // Recogemos un parámetro por la url
@@ -98,43 +116,43 @@ module.exports = {
                 for (let tes of test) {
                    testList.push({id: tes._id,
 
-                       Fechacreacion:req.body.Fechacreacion,
+                       Fechacreacion:tes.Fechacreacion,
                        //Sintomas
-                       Fecha1erossintomas:req.body.Fecha1erossintomas,
-                       Fiebremayor38grado:req.body.Fiebremayor38grado,
-                       Diarrea:req.body.Diarrea,
-                       Vomitos:req.body.Vomitos,
-                       Dolorgarganta:req.body.Dolorgarganta,
-                       Rechazoalimento:req.body.Rechazoalimento,
-                       Perdidadelolfato:req.body.Perdidadelolfato,
+                       Fecha1erossintomas:tes.Fecha1erossintomas,
+                       Fiebremayor38grado:tes.Fiebremayor38grado,
+                       Diarrea:tes.Diarrea,
+                       Vomitos:tes.Vomitos,
+                       Dolorgarganta:tes.Dolorgarganta,
+                       Rechazoalimento:tes.Rechazoalimento,
+                       Perdidadelolfato:tes.Perdidadelolfato,
 
                        //Enfermedadespreviascomorbilidades/PATOLOGIAS
-                       Obesidad:req.body.Obesidad,
-                       Embarazo:req.body.Embarazo,
-                       Hipertensionarterial:req.body.Hipertensionarterial,
-                       Bronquiolitis:req.body.Bronquiolitis,
-                       Asma:req.body.Asma,
-                       Tuberculosis:req.body.Tuberculosis,
-                       Fumador:req.body.Fumador,
+                       Obesidad:tes.Obesidad,
+                       Embarazo:tes.Embarazo,
+                       Hipertensionarterial:tes.Hipertensionarterial,
+                       Bronquiolitis:tes.Bronquiolitis,
+                       Asma:tes.Asma,
+                       Tuberculosis:tes.Tuberculosis,
+                       Fumador:tes.Fumador,
 
                        //evaluaciondel medico
-                       Riesgo:req.body.Riesgo ,
+                       Riesgo:tes.Riesgo ,
                        //Tipodemuestraquesetomo
-                       Hisopadonasofaringeo:req.body.Hisopadonasofaringeo,
-                       Hisopadoorofaringe:req.body.Hisopadoorofaringe,
-                       Hisopodaonasofaringeo:req.body.Hisopadonasofaringeo,
-                       Fechatomademuestra:req.body.Fechatomademuestra,
+                       Hisopadonasofaringeo:tes.Hisopadonasofaringeo,
+                       Hisopadoorofaringe:tes.Hisopadoorofaringe,
+                       Hisopodaonasofaringeo:tes.Hisopadonasofaringeo,
+                       Fechatomademuestra:tes.Fechatomademuestra,
 
                        //Resultadosyevolucion
-                       Resultado: req.body.Resultado,
+                       Resultado: tes.Resultado,
                        //Datosdelaspersonasconlaqueestuvoencontacto:[],
-                       Fechainternacion:req.body.Fechainternacion,
+                       Fechainternacion:tes.Fechainternacion,
                        //Critico o estable
-                       Estado:req.body.Estado,
+                       Estado:tes.Estado,
                        //Condicion Sintomatico/Asintomatico
-                       Condicion:req.body.Condicion,
-                       Fechaalta:req.body.Fechaalta,
-                       Fechadedefuncion:req.body.Fechadedefuncion})
+                       Condicion:tes.Condicion,
+                       Fechaalta:tes.Fechaalta,
+                       Fechadedefuncion:tes.Fechadedefuncion})
                 }
                 res.json({status: "success", message: "Test list found!!! Lista de test encontrada !!!", data: {tests: testList}});
 
