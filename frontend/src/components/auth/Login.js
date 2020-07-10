@@ -1,94 +1,58 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import AlertaContext from '../../context/alertas/alertasContext';
-import AuthContext from '../../context/autenticacion/authContext';
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import MedicoContext from "../../context/MedicoContext";
+import Axios from "axios";
+import ErrorNotice from "../misc/ErrorNotice";
 
-const Login = (props) => {
-    const alertaContext = useContext(AlertaContext);
-    const { alerta, mostrarAlerta } = alertaContext;
+export default function Login() {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState();
 
-    const authContext = useContext(AuthContext);
-    const {mensaje, autenticado, iniciarSesion } = authContext;
+    const { setMedicoData } = useContext(MedicoContext);
+    const history = useHistory();
 
-    useEffect(() => {
-        // if (autenticado) {
-        //     props.history.push('/home')
-        // }
-        if (mensaje) {
-            mostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
-    }, [mensaje, autenticado, props.history]);
-
-    //State para iniciar sesion
-    const [usuario, guardarUsuario] = useState({
-        apynombre: '',
-        password: ''
-    });
-
-    //extraer de usuario
-    const { apynombre, password } = usuario;
-
-    const onChange = e => {
-        guardarUsuario({
-            ...usuario,
-            [e.target.name] : e.target.value
-        })
-    }
-
-    //cuando el usuario hace click en iniciar sesion
-    const onSubmit = async e => {
+    const submit = async (e) => {
         e.preventDefault();
-        //Validar que no haya campos vacios
-        if(apynombre.trim() === '' || password.trim() === '') {
-            mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+        try {
+            const loginMedico = { email, password };
+            const loginRes = await Axios.post(
+                "https://backendtpi-g5.herokuapp.com/api/medico/login",
+                loginMedico
+            );
+            setMedicoData({
+                token: loginRes.data.token,
+                medico: loginRes.data.medico,
+            });
+            localStorage.setItem("auth-token", loginRes.data.token);
+            history.push("/");
+        } catch (err) {
+            err.response.data.msg && setError(err.response.data.msg);
         }
+    };
+    return (
+        <div className="page">
+            <h2>Log in</h2>
+            {error && (
+                <ErrorNotice message={error} clearError={() => setError(undefined)} />
+            )}
+            <form className="form" onSubmit={submit}>
+                <label htmlFor="login-email">Email</label>
+                <input
+                    id="login-email"
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-        iniciarSesion({apynombre, password});
-    }
+                <label htmlFor="login-password">Password</label>
+                <input
+                    id="login-password"
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-    return ( 
-        <div className="form-usuario">
-            <div className="contenedor-form sombra-dark">
-                <h1>Iniciar Sesion</h1>
-
-                <form onSubmit={onSubmit}>
-                    <div className="campo-form">
-                        <label htmlFor="apynombre">Nombre</label>
-
-                        <input 
-                            type="text"
-                            id="apynombre"
-                            name="apynombre"
-                            placeholder="Tu nombre"
-                            value={apynombre}
-                            onChange={onChange}
-                        />
-                    </div>
-
-                    <div className="campo-form">
-                        <label htmlFor="password">Password</label>
-                        
-                        <input 
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Tu password"
-                            value={password}
-                            onChange={onChange}
-                        />
-                    </div>
-                    {alerta 
-                        ? ( <div className={`alerta ${alerta.categoria}`}> {alerta.msg} </div>) 
-                        : null 
-                    }                    
-                    <div className="campo-form">
-                        <input type="submit" className="btn btn-primario btn-block"
-                        value="Iniciar Sesion" />
-                    </div>
-                </form>
-            </div>
+                <input type="submit" value="Log in" />
+            </form>
         </div>
-     );
+    );
 }
-
-export default Login;
